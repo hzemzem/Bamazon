@@ -11,6 +11,7 @@ var connection = mysql.createConnection({
 	database: 'Bamazon'
 });
 
+// display menu for manager and prompt them to choose what they want to do
 function promptManagerAction() {
 
 	inquirer.prompt([
@@ -36,7 +37,7 @@ function promptManagerAction() {
 			}
 		}
 	]).then(function(input) {
-		
+		// call function based on manager input
 		if (input.option ==='sale') {
 			displayInventory();
 		} else if (input.option === 'lowInventory') {
@@ -53,6 +54,7 @@ function promptManagerAction() {
 	})
 }
 
+// function to display inventory
 function displayInventory() {
 
 	queryStr = 'SELECT * FROM products';
@@ -63,7 +65,7 @@ function displayInventory() {
 
 		console.log('Existing Inventory: ');
 		console.log('******************\n');
-
+		// loop through the table and display all products
 		var strOut = '';
 		for (var i = 0; i < data.length; i++) {
 			strOut = '';
@@ -77,13 +79,15 @@ function displayInventory() {
 		}
 
 	  	console.log("*****************************************************\n");
-
+	  	// end the connection
 		connection.end();
 	})
 }
 
+// displaying low invenory for manager to know what to update
 function displayLowInventory() {
 
+	// mysql command that will determine which products to display (with stock # < 10)
 	queryStr = 'SELECT * FROM products WHERE stock_quantity < 10';
 
 	connection.query(queryStr, function(err, data) {
@@ -92,6 +96,7 @@ function displayLowInventory() {
 		console.log('Low Inventory Items (below 10): ');
 		console.log('******************************\n');
 
+		// looping through the data array of low inventory and diplaying them
 		var strOut = '';
 		for (var i = 0; i < data.length; i++) {
 			strOut = '';
@@ -110,6 +115,7 @@ function displayLowInventory() {
 		connection.end();
 	})
 }
+
 
 function validateInteger(value) {
 	var integer = Number.isInteger(parseFloat(value));
@@ -134,6 +140,7 @@ function validateNumeric(value) {
 	}
 }
 
+// function to add a product and update stock
 function addInventory() {
 	
 	inquirer.prompt([
@@ -169,7 +176,7 @@ function addInventory() {
 				var productData = data[0];
 
 				console.log('Updating Inventory...');
-
+				// sql command to update a property of an item without creating new one or duplicating items
 				var updateQueryStr = 'UPDATE products SET stock_quantity = ' + (productData.stock_quantity + addQuantity) + ' WHERE item_id = ' + item;
 				
 				connection.query(updateQueryStr, function(err, data) {

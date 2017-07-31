@@ -11,6 +11,7 @@ var connection = mysql.createConnection({
 	database: 'Bamazon'
 });
 
+//validating user input
 function validateInput(value) {
 	var integer = Number.isInteger(parseFloat(value));
 	var sign = Math.sign(value);
@@ -22,6 +23,7 @@ function validateInput(value) {
 	}
 }
 
+// display inventory to user and prompt them to choose an item to purchase
 function promptUserPurchase() {
 
 	inquirer.prompt([
@@ -49,7 +51,7 @@ function promptUserPurchase() {
 		connection.query(queryStr, {item_id: item}, function(err, data) {
 			if (err) throw err;
 
-			
+			// making sure the user makes the right selection
 			if (data.length === 0) {
 				console.log('ERROR: Invalid Item ID. Please select a valid Item ID.');
 				displayInventory();
@@ -69,7 +71,7 @@ function promptUserPurchase() {
 
 						console.log('Your oder has been placed! Your total is $' + productData.price * quantity);
 						console.log('Thank you for shopping with us!');
-						console.log("\n---------------------------------------------------------------------\n");
+						console.log("*****************************************************\n");
 
 						connection.end();
 					})
@@ -85,6 +87,7 @@ function promptUserPurchase() {
 	})
 }
 
+// function to display available products and prices
 function displayInventory() {
 
 	queryStr = 'SELECT * FROM products';
@@ -93,7 +96,7 @@ function displayInventory() {
 		if (err) throw err;
 
 		console.log('Existing Inventory: ');
-		console.log('...................\n');
+		console.log('******************\n');
 
 		var strOut = '';
 		for (var i = 0; i < data.length; i++) {
