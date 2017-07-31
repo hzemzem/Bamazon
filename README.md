@@ -9,4 +9,25 @@ Make sure you save and require the MySQL and Inquirer npm packages in your homew
 
 # Customer Purchase:
 
+## Not Enough Stock:
 ![alt text](notenoughstock.jpg)
+
+## Purchase: Successful:
+![alt text](purchasesuccess.jpg)
+
+# Manager View:
+
+## Manager Menu:
+![alt text](managermenu.jpg)
+
+## Manager View Inventory:
+![alt text](managerview.jpg)
+
+## Manager View Low Inventory (less than 10):
+![alt text](managerlow.jpg)
+
+## Manager Update Product Stock:
+![alt text](managerupdate.jpg)
+
+## Manager Add New Product:
+![alt text](manageradd.jpg)
